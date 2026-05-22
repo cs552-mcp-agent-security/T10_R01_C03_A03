@@ -28,11 +28,12 @@ def main(argv: list[str] | None = None) -> int:
         print(f"error: output {output_path} already exists; refusing to overwrite", file=sys.stderr)
         return 2
 
-    cmd = runner.build_ffmpeg_command(profile, input_path, output_path)
+    cmds = runner.build_ffmpeg_command(profile, input_path, output_path)
     if args.dry_run:
-        print(" ".join(cmd))
+        for c in cmds:
+            print(" ".join(c))
         return 0
-    return runner.run(cmd)
+    return runner.run(cmds)
 
 
 if __name__ == "__main__":
